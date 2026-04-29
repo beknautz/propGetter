@@ -32,6 +32,8 @@ require_once APP_PATH . '/controllers/CampaignController.php';
 require_once APP_PATH . '/controllers/TaskController.php';
 require_once APP_PATH . '/controllers/AIController.php';
 require_once APP_PATH . '/controllers/CalculatorController.php';
+require_once APP_PATH . '/controllers/UserController.php';
+require_once APP_PATH . '/controllers/SettingsController.php';
 
 // Start session
 Auth::startSession();
@@ -44,7 +46,8 @@ View::share('appName',     APP_NAME);
 $router = new Router();
 $auth   = [Router::authMiddleware()];
 $csrf   = [Router::authMiddleware(), Router::csrfMiddleware()];
-$admin  = [Router::roleMiddleware('admin')];
+$admin      = [Router::roleMiddleware('admin')];
+$adminCsrf  = [Router::roleMiddleware('admin'), Router::csrfMiddleware()];
 
 // Dashboard
 $router->get('/',          fn() => DashboardController::index(),  $auth);
@@ -101,6 +104,19 @@ $router->post('/leads/:id/analyze',   fn($p)     => AIController::runAnalysis((i
 // Calculator
 $router->get('/leads/:id/calculator', fn($p)     => CalculatorController::show((int)$p['id']), $auth);
 $router->post('/leads/:id/calculator',fn($p)     => CalculatorController::calculate((int)$p['id']), $csrf);
+
+// Users (admin only)
+$router->get('/users',                  fn()   => UserController::index(),              $admin);
+$router->get('/users/create',           fn()   => UserController::create(),             $admin);
+$router->post('/users/create',          fn()   => UserController::store(),              $adminCsrf);
+$router->get('/users/:id/edit',         fn($p) => UserController::edit((int)$p['id']), $admin);
+$router->post('/users/:id/edit',        fn($p) => UserController::update((int)$p['id']), $adminCsrf);
+$router->post('/users/:id/delete',      fn($p) => UserController::destroy((int)$p['id']), $adminCsrf);
+
+// Settings (admin only)
+$router->get('/settings',               fn()   => SettingsController::index(),          $admin);
+$router->post('/settings/save',         fn()   => SettingsController::save(),           $adminCsrf);
+$router->post('/settings/provider/:id', fn($p) => SettingsController::saveProvider((int)$p['id']), $adminCsrf);
 
 // Twilio inbound webhook (no auth - verified by signature)
 $router->post('/webhooks/twilio/sms', fn() => (new TwilioService())->handleInbound($_POST));

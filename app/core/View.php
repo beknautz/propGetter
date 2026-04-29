@@ -68,11 +68,28 @@ class View
         exit;
     }
 
-    /** Redirect to a URL */
-    public static function redirect(string $url, int $status = 302): void
+    /** Redirect to a URL, optionally setting a flash message */
+    public static function redirect(string $url, string $message = '', string $type = 'success', int $status = 302): void
     {
+        if ($message !== '') {
+            $_SESSION['_flash'] = ['message' => $message, 'type' => $type];
+        }
         header("Location: {$url}", true, $status);
         exit;
+    }
+
+    /** Return Bootstrap alert HTML for the current flash message, then clear it */
+    public static function flashHtml(): string
+    {
+        if (empty($_SESSION['_flash'])) return '';
+        $f = $_SESSION['_flash'];
+        unset($_SESSION['_flash']);
+        $msg  = self::e($f['message']);
+        $type = self::e($f['type']);
+        return "<div class=\"alert alert-{$type} alert-dismissible fade show\" role=\"alert\">"
+             . $msg
+             . '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>'
+             . '</div>';
     }
 
     /** Escape output for HTML */
