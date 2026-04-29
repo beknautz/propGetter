@@ -1,2 +1,15 @@
+Options -Indexes
 RewriteEngine On
-RewriteRule ^(.*)$ public/$1 [L]
+RewriteBase /
+
+# Map /assets/ to public/assets/ so CSS/JS load correctly
+RewriteRule ^assets/(.*)$ public/assets/$1 [L]
+
+# Route login/logout to their public/ files
+RewriteRule ^login\.php$  public/login.php [L]
+RewriteRule ^logout\.php$ public/logout.php [L]
+
+# Everything else → public/index.php (skip real files/directories)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ public/index.php [QSA,L]
