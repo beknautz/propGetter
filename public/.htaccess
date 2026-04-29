@@ -1,15 +1,13 @@
 Options -Indexes
 RewriteEngine On
 
-# Serve existing files and directories directly
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-
-# Except login and logout
+# Pass login and logout directly
 RewriteRule ^login\.php$  - [L]
 RewriteRule ^logout\.php$ - [L]
 
-# Route everything else through index.php
+# Route everything else through index.php (skip real files and directories)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]
 
 # Security headers
