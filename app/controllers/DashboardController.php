@@ -9,9 +9,9 @@ class DashboardController
     {
         Auth::require();
 
-        $stats       = Lead::dashboardStats();
-        $dueTasks    = Task::getDueSoon(Auth::id(), 5);
-        $upcomingTasks = Task::getUpcoming(Auth::id(), 5);
+        $stats         = Lead::dashboardStats();
+        $dueTasks      = Task::getDueSoon(Auth::id(), 10);
+        $upcomingTasks = Task::getUpcoming(Auth::id(), 10);
 
         View::render('dashboard/index', [
             'pageTitle'     => 'Dashboard',
