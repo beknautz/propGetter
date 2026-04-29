@@ -4,11 +4,12 @@
 -- ============================================================
 -- Default admin user  (password: Admin1234!)
 -- ============================================================
+-- All accounts use password: Admin1234!
 INSERT INTO users (name, email, password, role, active) VALUES
-('Admin User',        'admin@propintel.com',        '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uHdpkp0Iy', 'admin',        1),
-('Acquisitions Agent','acquisitions@propintel.com', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uHdpkp0Iy', 'acquisitions', 1),
-('Marketing Manager', 'marketing@propintel.com',    '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uHdpkp0Iy', 'marketing',    1),
-('View Only User',    'viewer@propintel.com',       '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uHdpkp0Iy', 'viewer',       1);
+('Admin User',        'admin@propintel.com',        '$2y$12$UNm5zkNk7oDTb7.BJb6wUuh5dHzm2N3BUbBd5jNtcbBFTBp2N/Sse', 'admin',        1),
+('Acquisitions Agent','acquisitions@propintel.com', '$2y$12$UNm5zkNk7oDTb7.BJb6wUuh5dHzm2N3BUbBd5jNtcbBFTBp2N/Sse', 'acquisitions', 1),
+('Marketing Manager', 'marketing@propintel.com',    '$2y$12$UNm5zkNk7oDTb7.BJb6wUuh5dHzm2N3BUbBd5jNtcbBFTBp2N/Sse', 'marketing',    1),
+('View Only User',    'viewer@propintel.com',       '$2y$12$UNm5zkNk7oDTb7.BJb6wUuh5dHzm2N3BUbBd5jNtcbBFTBp2N/Sse', 'viewer',       1);
 
 -- ============================================================
 -- API Provider placeholders
